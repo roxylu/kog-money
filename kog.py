@@ -4,9 +4,10 @@
 import logging
 import os
 from time import sleep
+import wda
 
 # 屏幕分辨率
-device_x, device_y = 1920, 1080
+device_x, device_y = 2346, 1125
 
 # 通关模式：1=重新挑战 -> 挑战界面，2=重新挑战-> 更换阵容
 game_mode = 2
@@ -21,6 +22,8 @@ repeat_times = 60
 logging.basicConfig(format='%(asctime)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p',
                     level=logging.DEBUG)
+c = wda.Client()
+s = c.session()
 
 
 def tap_screen(x, y):
@@ -28,7 +31,8 @@ def tap_screen(x, y):
     base_x, base_y = 1920, 1080
     real_x = int(x / base_x * device_x)
     real_y = int(y / base_y * device_y)
-    os.system('adb shell input tap {} {}'.format(real_x, real_y))
+    logging.info('{}, {}'.format(real_x, real_y))
+    s.tap(real_x, real_y)
 
 
 def do_money_work():
